@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block body %}
+
+{{ current_user }}
+
+<form action="" method="post">
+    <input type="text" id="username" name="username"
+        placeholder="Enter login" value="{{ request.form.username }}" required>
+    <input type="password" id="password" name="password"
+        placeholder="Enter password" value="{{ request.form.password }}" required>
+    <button type="submit">Log in</button>
+</form>
+
+{% endblock %}

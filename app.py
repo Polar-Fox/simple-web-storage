@@ -1,5 +1,7 @@
+import os
 from flask import Flask
-from flask import render_template, redirect, url_for, request
+from flask import render_template, redirect, url_for, request,\
+    send_from_directory
 from flask_login import LoginManager, login_user, logout_user, current_user,\
     login_required
 
@@ -42,11 +44,45 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+@app.route('/list/')
 @app.route('/list/<path:path>')
-def list(path):
+def list(path=''):
     if not current_user.is_authenticated:
         return redirect(url_for('login', next=request.url))
-    return path
+
+    full_path = os.path.abspath(os.path.join(current_user.get_dir(), path))
+
+    if full_path.startswith(current_user.get_dir()):
+        if not os.path.exists(full_path):
+            return 'Path not found', 404
+    else:
+        return redirect(url_for('list', path=''))
+
+    if os.path.isfile(full_path):
+        dirname, filename = os.path.split(full_path)
+        return send_from_directory(dirname, filename)
+    elif os.path.isdir(full_path):
+        dir_list = []
+        file_list = []
+        print('=====')
+        for entry_name in os.listdir(full_path):
+            full_entry_path = os.path.join(full_path, entry_name)
+            if os.path.isfile(full_entry_path):
+                file_list.append(entry_name)
+            elif os.path.isdir(full_entry_path):
+                dir_list.append(entry_name)
+        print(dir_list, file_list)
+        # print('=====')
+        # for dirname, dirnames, filenames in os.walk(full_path):
+        #     print('-----')
+        #     print(dirname, dirnames, filenames)
+        return 'DIR'
+
+    return 'Path not found', 404
+
+        
+
+
 
 @app.route('/')
 def index():

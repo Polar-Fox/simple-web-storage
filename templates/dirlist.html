@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div class="file_explorer">
+    {% for dirname in data['dirnames'] %}
+        <a href="{{dirname}}" class="explorer_item directory" data-name="{{dirname}}">
+            {% if dirname != ".." %}
+                <div class="toolbar">
+                    <button class="rename">Rename</button>
+                    <button class="delete">Delete</button>
+                </div>
+            {% endif %}
+            <div class="name">
+                <span>{{dirname}}</span>
+            </div>
+            <div class="clear"></div>
+        </a>
+    {% endfor %}
+
+    {% for filename in data['filenames'] %}
+        <a href="{{filename}}" class="explorer_item file" data-name="{{filename}}">
+            <div class="name">
+                <span>{{filename}}</span>
+            </div>
+            <div class="clear"></div>
+        </a>
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% block body %}
 
+<div class="toolbar">
+    <button>New folder</button>
+    <button>Cut</button>
+</div>
+
 <div class="file_explorer">
     {% for dirname in data['dirnames'] %}
         <a href="{{dirname}}" class="explorer_item directory" data-name="{{dirname}}">

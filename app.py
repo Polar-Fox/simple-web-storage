@@ -1,11 +1,11 @@
-import os
+import os, json
 from flask import Flask
 from flask import render_template, redirect, url_for, request,\
     send_from_directory
 from flask_login import LoginManager, login_user, logout_user, current_user,\
     login_required
 
-import conf, auth, common
+import conf, auth, common, fsop
 
 common.ensure_dir(conf.media_dir)
 
@@ -82,6 +82,7 @@ def list(path=''):
                 dir_list.append(entry_name)
 
         data = {
+            'dir': path,
             'dirnames': dir_list,
             'filenames': file_list
         }
@@ -89,9 +90,32 @@ def list(path=''):
 
     return 'Path not found', 404
 
-        
+def process_ajax_request(req, current_user):
+    result = {
+        'result': 'error',
+        'message': ''
+    }
+
+    if 'action' in req.keys():
+        if req['action'] == 'new_directory' and current_user.is_authenticated:
+            op_res, msg = fsop.create_new_dir(
+                current_user,
+                os.path.join(req['dir'], req['dirname']))
+            result = {
+                'result': 'OK' if op_res else 'error',
+                'message': msg
+            }
 
 
+    return result
+
+@app.route('/ajax', methods=['POST'])
+def ajax():
+    result = {}
+    if request.method == 'POST':
+        print(request.url)
+        result = process_ajax_request(request.form, current_user)
+    return json.dumps(result)
 
 @app.route('/')
 def index():

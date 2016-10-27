@@ -4,6 +4,11 @@
     <meta charset="utf-8">
     <title>{% block title %}Web storage{% endblock %}</title>
     <link href="/static/js/jquery-ui/jquery-ui.min.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="/static/css/vex.css" />
+    <link rel="stylesheet" href="/static/css/vex-theme-os.css" />
+
     <link href="/static/css/style.css" rel="stylesheet">
 
     <link rel="icon" type="image/png" href="/static/images/favicon16.png" sizes="16x16">
@@ -11,6 +16,7 @@
 
     <script src="/static/js/jquery-2.2.1.min.js"></script>
     <script src="/static/js/jquery-ui/jquery-ui.min.js"></script>
+    <script src="/static/js/vex.combined.min.js"></script>
     <script src="/static/js/main.js"></script>
     {#
     #}
@@ -19,6 +25,7 @@
     {% endblock %}
 </head>
 <body>
+    <script>vex.defaultOptions.className = 'vex-theme-os'</script>
     {% block body %}
     {% endblock %}
 </body>

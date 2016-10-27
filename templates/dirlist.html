@@ -2,11 +2,14 @@
 {% block body %}
 
 <div class="toolbar">
-    <button>New folder</button>
+    <button id="btn_new_directory">New folder</button>
     <button>Cut</button>
 </div>
 
+
+
 <div class="file_explorer">
+    <input name="dir" type="hidden" value="{{data['dir']}}">
     {% for dirname in data['dirnames'] %}
         <a href="{{dirname}}" class="explorer_item directory" data-name="{{dirname}}">
             {% if dirname != ".." %}

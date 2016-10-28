@@ -26,6 +26,12 @@ function createNewDirectory(dirname) {
     });
 };
 
+function makePublicLink(dirname, filename) {
+    console.log(dirname);
+    console.log(filename);
+    return false;
+};
+
 $(document).ready(function() {
     $('#btn_new_directory').click(function() {
         vex.dialog.prompt({
@@ -39,4 +45,6 @@ $(document).ready(function() {
         });
         return false;
     });
+
+    $('')
 });

@@ -20,6 +20,10 @@ def load_user(user_id):
     user = auth.User(user_id)
     return user.get()
 
+@app.route('/favicon.ico')
+def favicon():
+    return ""
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:

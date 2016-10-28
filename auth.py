@@ -1,18 +1,7 @@
 import os
 import conf
 
-users = {
-    1: {
-        'id': 1,
-        'username': 'user1',
-        'password': 'pass1',
-    },
-    2: {
-        'id': 2,
-        'username': 'user2',
-        'password': 'pass2',
-    },
-}
+import users
 
 class User():
     def __init__(self, user_id=0):
@@ -22,14 +11,14 @@ class User():
         self.try_to_log_in_by_id(user_id)
 
     def try_to_log_in_by_id(self, user_id):
-        for key, userdata in users.items():
+        for key, userdata in users.users.items():
             if userdata['id'] == user_id:
                 self.id = user_id
                 return
         self.id = 0
 
     def try_to_log_in_by_credentials(self, username, password):
-        for key, userdata in users.items():
+        for key, userdata in users.users.items():
             if userdata['username'] == username\
                 and userdata['password'] == password:
                 self.id = key

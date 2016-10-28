@@ -48,8 +48,8 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route('/list/')
-@app.route('/list/<path:path>')
+@app.route('/list/', methods=['GET', 'POST'])
+@app.route('/list/<path:path>', methods=['GET', 'POST'])
 def list(path=''):
     if not current_user.is_authenticated:
         return redirect(url_for('login', next=request.url))
@@ -70,6 +70,14 @@ def list(path=''):
         dirname, filename = os.path.split(full_path)
         return send_from_directory(dirname, filename)
     elif os.path.isdir(full_path):
+        if request.method == 'POST':
+            uploaded_file = request.files['file']
+            uploaded_file.save(os.path.join(full_path, uploaded_file.filename))
+            if not path.endswith('/') and not is_root:
+                return redirect(url_for('list', path=path+'/'))
+            else:
+                return redirect(url_for('list', path=path))
+
         if not path.endswith('/') and not is_root:
             return redirect(url_for('list', path=path+'/'))
         dir_list = []
@@ -86,6 +94,8 @@ def list(path=''):
                 elif os.path.isdir(full_entry_path):
                     dir_list.append(entry_name)
 
+        dir_list.sort()
+        file_list.sort()
         data = {
             'dir': path,
             'dirnames': dir_list,
@@ -112,28 +122,32 @@ def process_ajax_request(req, current_user):
     }
 
     if 'action' in req.keys():
-        if req['action'] == 'new_directory' and current_user.is_authenticated:
-            op_res, msg = fsop.create_new_dir(
-                current_user,
-                os.path.join(req['dir'], req['dirname']))
-            result = {
-                'result': 'OK' if op_res else 'error',
-                'message': msg
-            }
-        elif req['action'] == 'make_public_link' and current_user.is_authenticated:
-            op_res, res = fsop.make_public_link(
-                current_user, req['dir'], req['filename'])
+        try:
+            op_res = False
+            res = ''
+
+            if req['action'] == 'new_directory' and current_user.is_authenticated:
+                op_res, res = fsop.create_new_dir(current_user,
+                    os.path.join(req['dir'], req['dirname']))
+            elif req['action'] == 'make_public_link' and current_user.is_authenticated:
+                op_res, res = fsop.make_public_link(
+                    current_user, req['dir'], req['filename'])
+            elif req['action'] == 'remove_public_link' and current_user.is_authenticated:
+                op_res, res = fsop.remove_public_link(
+                    current_user, req['dir'], req['filename'])
+            elif req['action'] == 'rename_entry' and current_user.is_authenticated:
+                op_res, res = fsop.rename_entry(
+                    current_user, req['dir'], req['old_name'], req['new_name'])
+            elif req['action'] == 'delete_entry' and current_user.is_authenticated:
+                op_res, res = fsop.delete_entry(
+                    current_user, req['dir'], req['entryname'])
+
             result = {
                 'result': 'OK' if op_res else 'error',
                 'message': res
             }
-        elif req['action'] == 'remove_public_link' and current_user.is_authenticated:
-            op_res, res = fsop.remove_public_link(
-                current_user, req['dir'], req['filename'])
-            result = {
-                'result': 'OK' if op_res else 'error',
-                'message': res
-            }
+        except OSError:
+            result['message'] = 'OS error'
 
 
     return result
@@ -150,6 +164,7 @@ def ajax():
 def index():
     if not current_user.is_authenticated:
         return redirect(url_for('login', next=request.url))
+    return redirect(url_for('list', path=''))
     return render_template('index.html')
 
 if __name__ == '__main__':

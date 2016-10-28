@@ -1,4 +1,4 @@
-import os, uuid, json
+import os, uuid, json, shutil
 import conf
 
 def ensure_dir(dirname):
@@ -50,10 +50,10 @@ def make_public_link(current_user, dirname, filename):
             set_dir_options(os.path.dirname(abs_path), dir_options)
     return True, ''
 
-def remove_public_link(current_user, dirname, filename):
+def remove_public_link(current_user, dirname, filename, force=False):
     abs_path = os.path.abspath(os.path.join(current_user.get_dir(), dirname, filename))
     if abs_path.startswith(current_user.get_dir()):
-        if os.path.exists(abs_path):
+        if os.path.exists(abs_path) or force:
             dir_options = get_dir_options(os.path.dirname(abs_path))
             if 'public_files' in dir_options.keys():
                 if filename in dir_options['public_files'].keys():
@@ -65,5 +65,27 @@ def remove_public_link(current_user, dirname, filename):
                     public_uuid_filepath = os.path.join(public_dir, file_uuid)
                     if os.path.exists(public_uuid_filepath):
                         os.remove(public_uuid_filepath)
+            
+    return True, ''
+
+def rename_entry(current_user, dirname, old_name, new_name):
+    old_abs_path = os.path.abspath(os.path.join(current_user.get_dir(), dirname, old_name))
+    new_abs_path = os.path.abspath(os.path.join(current_user.get_dir(), dirname, new_name))
+    if old_abs_path.startswith(current_user.get_dir()):
+        if os.path.exists(old_abs_path):
+            os.rename(old_abs_path, new_abs_path)
+            remove_public_link(current_user, dirname, old_name, force=True)
+            
+    return True, ''
+
+def delete_entry(current_user, dirname, entryname):
+    abs_path = os.path.abspath(os.path.join(current_user.get_dir(), dirname, entryname))
+    if abs_path.startswith(current_user.get_dir()):
+        if os.path.exists(abs_path):
+            remove_public_link(current_user, dirname, entryname)
+            if os.path.isfile(abs_path):
+                os.remove(abs_path)
+            elif os.path.isdir(abs_path):
+                shutil.rmtree(abs_path)
 
     return True, ''

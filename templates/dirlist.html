@@ -1,9 +1,21 @@
 {% extends 'base.html' %}
 {% block body %}
 
-<div class="toolbar">
-    <button id="btn_new_directory">New folder</button>
-    <button>Cut</button>
+<div class="top_toolbar">
+    <div class="top_toolbar_block">
+        <button id="btn_new_directory">New folder</button>
+    </div>
+    <div class="top_toolbar_block">
+        <span>Upload a file: </span>
+        <form class="upload_form" action="" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file">
+            <input type="submit" value="Upload">
+        </form>
+    </div>
+    <div class="top_toolbar_block right">
+        <a href="/logout">Log out</a>
+    </div>
+    <div class="clear"></div>
 </div>
 
 <div class="file_explorer">
@@ -12,8 +24,12 @@
         <div class="explorer_item directory">
             {% if dirname != ".." %}
                 <div class="toolbar">
-                    <button class="rename">Rename</button>
-                    <button class="delete">Delete</button>
+                    <button class="rename"
+                        onclick="renameEntry('{{data['dir']}}', '{{dirname}}');"
+                        >Rename</button>
+                    <button class="delete"
+                        onclick="deleteEntry('{{data['dir']}}', '{{dirname}}');"
+                        >Delete</button>
                 </div>
             {% endif %}
             <a href="{{dirname}}" class="explorer_item" data-name="{{dirname}}">
@@ -34,8 +50,12 @@
                 {% else %}
                     <button class="make_public_link" onclick="makePublicLink('{{data['dir']}}', '{{filename}}'); return false;">Make public link</button>
                 {% endif %}
-                <button class="rename">Rename</button>
-                <button class="delete">Delete</button>
+                <button class="rename"
+                    onclick="renameEntry('{{data['dir']}}', '{{filename}}');"
+                    >Rename</button>
+                <button class="delete"
+                    onclick="deleteEntry('{{data['dir']}}', '{{filename}}');"
+                    >Delete</button>
             </div>
             <a href="{{filename}}" class="explorer_item" data-name="{{filename}}">
                 <div class="name">

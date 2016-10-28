@@ -79,19 +79,30 @@ def list(path=''):
             dir_list.append('..')
 
         for entry_name in os.listdir(full_path):
-            full_entry_path = os.path.join(full_path, entry_name)
-            if os.path.isfile(full_entry_path):
-                file_list.append(entry_name)
-            elif os.path.isdir(full_entry_path):
-                dir_list.append(entry_name)
+            if entry_name not in ['.options']:
+                full_entry_path = os.path.join(full_path, entry_name)
+                if os.path.isfile(full_entry_path):
+                    file_list.append(entry_name)
+                elif os.path.isdir(full_entry_path):
+                    dir_list.append(entry_name)
 
         data = {
             'dir': path,
             'dirnames': dir_list,
-            'filenames': file_list
+            'filenames': file_list,
+            'dir_options': fsop.get_dir_options(full_path)
         }
         return render_template('dirlist.html', data=data)
 
+    return 'Path not found', 404
+
+@app.route('/public/<file_uuid>/<filename>')
+def public(file_uuid, filename):
+    public_dir = os.path.join(conf.media_dir, 'public')
+    link_file_path = os.path.join(public_dir, file_uuid)
+    if os.path.exists(link_file_path):
+        file_path = os.path.join(conf.media_dir, open(link_file_path, 'r').read())
+        return send_from_directory(os.path.dirname(file_path), os.path.basename(file_path))
     return 'Path not found', 404
 
 def process_ajax_request(req, current_user):
@@ -108,6 +119,20 @@ def process_ajax_request(req, current_user):
             result = {
                 'result': 'OK' if op_res else 'error',
                 'message': msg
+            }
+        elif req['action'] == 'make_public_link' and current_user.is_authenticated:
+            op_res, res = fsop.make_public_link(
+                current_user, req['dir'], req['filename'])
+            result = {
+                'result': 'OK' if op_res else 'error',
+                'message': res
+            }
+        elif req['action'] == 'remove_public_link' and current_user.is_authenticated:
+            op_res, res = fsop.remove_public_link(
+                current_user, req['dir'], req['filename'])
+            result = {
+                'result': 'OK' if op_res else 'error',
+                'message': res
             }
 
 

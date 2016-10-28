@@ -6,33 +6,35 @@ div.file_explorer {
     background: #eee;
     padding: 6px 9px;
 }
-div.file_explorer a.explorer_item {
+div.file_explorer div.explorer_item {
     display: block;
     padding: 5px 1px 5px 32px;
-    text-decoration: none;
-    color: #000;
     background-repeat: no-repeat;
     background-color: #fff;
 }
-div.file_explorer a.explorer_item:hover {
+div.file_explorer div.explorer_item a.explorer_item {
+    text-decoration: none;
+    color: #000;
+}
+div.file_explorer div.explorer_item:hover {
     background-color: #eef;
 }
-div.file_explorer a.explorer_item.directory {
+div.file_explorer div.explorer_item.directory {
     font-weight: bold;
     background-image: url(/static/images/directory.png);
     background-position: 3px 3px;
 }
-div.file_explorer a.explorer_item.file {
+div.file_explorer div.explorer_item.file {
     background-image: url(/static/images/file.png);
     background-position: 5px 2px;
 }
-div.file_explorer a.explorer_item div.name {
+div.file_explorer div.explorer_item div.name {
     margin-right: 200px;
 }
-div.file_explorer a.explorer_item div.name span {}
-div.file_explorer a.explorer_item div.toolbar {
+div.file_explorer div.explorer_item div.name span {}
+div.file_explorer div.explorer_item div.toolbar {
     float: right;
 }
-div.file_explorer a.explorer_item div.toolbar button {}
-div.file_explorer a.explorer_item div.toolbar button.rename {}
-div.file_explorer a.explorer_item div.toolbar button.delete {}
+div.file_explorer div.explorer_item div.toolbar button {}
+div.file_explorer div.explorer_item div.toolbar button.rename {}
+div.file_explorer div.explorer_item div.toolbar button.delete {}

@@ -27,9 +27,55 @@ function createNewDirectory(dirname) {
 };
 
 function makePublicLink(dirname, filename) {
-    console.log(dirname);
-    console.log(filename);
-    return false;
+    var req = {
+        'action': 'make_public_link',
+        'dir': dirname,
+        'filename': filename
+    };
+
+    $.ajax({
+        url: '/ajax',
+        data: req,
+        dataType: 'json',
+        method: 'POST',
+        success: function(data, textStatus, jqXHR) {
+            if (data['result'] == 'OK') {
+                location.reload();
+            }
+            else if (data['result'] == 'error') {
+                vex.dialog.alert({ unsafeMessage: '<b>Error:</b> '+data['message'] });
+            }
+        },
+        error: function(data, textStatus, jqXHR) {
+            console.log('Error: '+textStatus);
+        }
+    });
+};
+
+function removePublicLink(dirname, filename) {
+    var req = {
+        'action': 'remove_public_link',
+        'dir': dirname,
+        'filename': filename
+    };
+
+    $.ajax({
+        url: '/ajax',
+        data: req,
+        dataType: 'json',
+        method: 'POST',
+        success: function(data, textStatus, jqXHR) {
+            if (data['result'] == 'OK') {
+                location.reload();
+            }
+            else if (data['result'] == 'error') {
+                vex.dialog.alert({ unsafeMessage: '<b>Error:</b> '+data['message'] });
+            }
+        },
+        error: function(data, textStatus, jqXHR) {
+            console.log('Error: '+textStatus);
+        }
+    });
 };
 
 $(document).ready(function() {

@@ -3,6 +3,11 @@
 
 <div class="center_wrapper">
     <form class="login_form" action="" method="post">
+        {% if error_message %}
+            <div class="line">
+                <p class="error">{{error_message}}</p>
+            </div>
+        {% endif %}
         <div class="line">
             <input type="text" id="username" name="username"
                 placeholder="Enter username" value="{{ request.form.username }}" required>
@@ -16,9 +21,5 @@
         </div>
     </form>
 </div>
-
-{% if error_message %}
-    <p class="error">{{error_message}}</p>
-{% endif %}
 
 {% endblock %}

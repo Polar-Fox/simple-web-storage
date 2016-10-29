@@ -5,8 +5,6 @@ function makeFileOperationRequest(req) {
         dataType: 'json',
         method: 'POST',
         success: function(data, textStatus, jqXHR) {
-            console.log(data);
-            console.log(textStatus);
             if (data['result'] == 'OK') {
                 location.reload();
             }
@@ -27,26 +25,6 @@ function createNewDirectory(dirname) {
         'dirname': dirname
     };
     makeFileOperationRequest(req);
-
-    // $.ajax({
-    //     url: '/ajax',
-    //     data: req,
-    //     dataType: 'json',
-    //     method: 'POST',
-    //     success: function(data, textStatus, jqXHR) {
-    //         console.log(data);
-    //         console.log(textStatus);
-    //         if (data['result'] == 'OK') {
-    //             location.reload();
-    //         }
-    //         else if (data['result'] == 'error') {
-    //             vex.dialog.alert({ unsafeMessage: '<b>Error:</b> '+data['message'] });
-    //         }
-    //     },
-    //     error: function(data, textStatus, jqXHR) {
-    //         console.log('Error: '+textStatus);
-    //     }
-    // });
 };
 
 function makePublicLink(dirname, filename) {
@@ -56,24 +34,6 @@ function makePublicLink(dirname, filename) {
         'filename': filename
     };
     makeFileOperationRequest(req);
-
-    // $.ajax({
-    //     url: '/ajax',
-    //     data: req,
-    //     dataType: 'json',
-    //     method: 'POST',
-    //     success: function(data, textStatus, jqXHR) {
-    //         if (data['result'] == 'OK') {
-    //             location.reload();
-    //         }
-    //         else if (data['result'] == 'error') {
-    //             vex.dialog.alert({ unsafeMessage: '<b>Error:</b> '+data['message'] });
-    //         }
-    //     },
-    //     error: function(data, textStatus, jqXHR) {
-    //         console.log('Error: '+textStatus);
-    //     }
-    // });
 };
 
 function removePublicLink(dirname, filename) {
@@ -83,24 +43,6 @@ function removePublicLink(dirname, filename) {
         'filename': filename
     };
     makeFileOperationRequest(req);
-
-    // $.ajax({
-    //     url: '/ajax',
-    //     data: req,
-    //     dataType: 'json',
-    //     method: 'POST',
-    //     success: function(data, textStatus, jqXHR) {
-    //         if (data['result'] == 'OK') {
-    //             location.reload();
-    //         }
-    //         else if (data['result'] == 'error') {
-    //             vex.dialog.alert({ unsafeMessage: '<b>Error:</b> '+data['message'] });
-    //         }
-    //     },
-    //     error: function(data, textStatus, jqXHR) {
-    //         console.log('Error: '+textStatus);
-    //     }
-    // });
 };
 
 function renameEntry(dirname, entryname) {
@@ -151,6 +93,4 @@ $(document).ready(function() {
         });
         return false;
     });
-
-    $('')
 });

@@ -17,6 +17,7 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
+    print('USER ID:', user_id)
     user = auth.User(user_id)
     return user.get()
 
@@ -41,7 +42,6 @@ def login():
         else:
             logout_user()
             return render_template('login.html', error_message='Wrong username or password.')
-        print(user)
     return render_template('login.html')
 
 @app.route('/logout')
@@ -157,7 +157,6 @@ def process_ajax_request(req, current_user):
 def ajax():
     result = {}
     if request.method == 'POST':
-        print(request.url)
         result = process_ajax_request(request.form, current_user)
     return json.dumps(result)
 
@@ -166,7 +165,6 @@ def index():
     if not current_user.is_authenticated:
         return redirect(url_for('login', next=request.url))
     return redirect(url_for('list', path=''))
-    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8002, debug=True)

@@ -11,6 +11,7 @@ def get_password_hash(username, password):
 def get_users():
     result = {
         'new_user_id': 1,
+        'user_ids': {},
         'users': {}
     }
     if os.path.exists(conf.users_file):
@@ -25,14 +26,14 @@ class User():
         if isinstance(user_id, str):
             user_id = int(user_id)
         self.id = 0
-        # self.try_to_log_in_by_id(user_id)
+        self.log_in_by_id(user_id)
 
-    # def try_to_log_in_by_id(self, user_id):
-    #     for key, userdata in users.users.items():
-    #         if userdata['id'] == user_id:
-    #             self.id = user_id
-    #             return
-    #     self.id = 0
+    def log_in_by_id(self, user_id):
+        users_data = get_users()
+        if str(user_id) in users_data['user_ids'].keys():
+            self.id = int(user_id)
+            return
+        self.id = 0
 
     def try_to_log_in_by_credentials(self, username, password):
         users_data = get_users()

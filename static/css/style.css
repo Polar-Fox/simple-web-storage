@@ -95,3 +95,30 @@ p.error {
     border-radius: 0px;
     margin: 0px;
 }
+
+.center_wrapper {
+    text-align: center;
+}
+
+form.login_form {
+    display: inline-block;
+    margin: 20px 0px;
+    min-width: 300px;
+    background: #eee;
+    padding: 22px 0px;
+    border-radius: 5px;
+    box-shadow: 1px 2px 10px #888;
+}
+form.login_form .line {}
+form.login_form .line.buttons {
+    margin-top: 10px;
+}
+form.login_form input[type="text"], form.login_form input[type="password"] {
+    min-height: 20px;
+    margin: 2px 0px;
+    padding: 0px 5px;
+}
+form.login_form button[type="submit"] {
+    min-width: 100px;
+    min-height: 30px;
+}

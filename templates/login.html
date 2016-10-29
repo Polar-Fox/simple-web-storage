@@ -1,13 +1,21 @@
 {% extends 'base.html' %}
 {% block body %}
 
-<form action="" method="post">
-    <input type="text" id="username" name="username"
-        placeholder="Enter login" value="{{ request.form.username }}" required>
-    <input type="password" id="password" name="password"
-        placeholder="Enter password" value="{{ request.form.password }}" required>
-    <button type="submit">Log in</button>
-</form>
+<div class="center_wrapper">
+    <form class="login_form" action="" method="post">
+        <div class="line">
+            <input type="text" id="username" name="username"
+                placeholder="Enter username" value="{{ request.form.username }}" required>
+        </div>
+        <div class="line">
+            <input type="password" id="password" name="password"
+                placeholder="Enter password" value="{{ request.form.password }}" required>
+        </div>
+        <div class="line buttons">
+            <button type="submit">Log in</button>
+        </div>
+    </form>
+</div>
 
 {% if error_message %}
     <p class="error">{{error_message}}</p>

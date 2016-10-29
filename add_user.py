@@ -23,6 +23,7 @@ users_data['users'][username] = {
     'username': username,
     'password_hash': password_hash
 }
+users_data['user_ids'][user_id] = username
 users_data['new_user_id'] = user_id + 1
 
 auth.save_users(users_data)

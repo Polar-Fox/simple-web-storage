@@ -16,6 +16,7 @@ if username not in users_data['users'].keys():
 user_id = users_data['users'][username]['id']
 
 del users_data['users'][username]
+del users_data['user_ids'][user_id]
 
 auth.save_users(users_data)
 

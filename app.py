@@ -40,6 +40,7 @@ def login():
             return redirect(next or url_for('index'))
         else:
             logout_user()
+            return render_template('login.html', error_message='Wrong username or password.')
         print(user)
     return render_template('login.html')
 

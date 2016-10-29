@@ -87,3 +87,11 @@ button:hover, input[type="submit"]:hover {
     background: #5af;
     color: #fff;
 }
+
+p.error {
+    color: #a00;
+    display: inline-block;
+    padding: 5px 20px;
+    border-radius: 0px;
+    margin: 0px;
+}

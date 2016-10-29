@@ -1,5 +1,5 @@
 import os, uuid, json, shutil
-import conf
+import conf, common
 
 def ensure_dir(dirname):
     if not os.path.exists(dirname):
@@ -41,7 +41,7 @@ def make_public_link(current_user, dirname, filename):
             filepath = abs_path[len(conf.media_dir):].strip('\\').strip('/')
             public_link = os.path.join(file_uuid, filename).replace('\\', '/')
             public_dir = os.path.join(conf.media_dir, 'public')
-            ensure_dir(public_dir)
+            common.ensure_dir(public_dir)
             open(os.path.join(public_dir, file_uuid), 'wb').write(filepath.encode('utf-8'))
             dir_options = get_dir_options(os.path.dirname(abs_path))
             if 'public_files' not in dir_options.keys():

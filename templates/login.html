@@ -9,4 +9,8 @@
     <button type="submit">Log in</button>
 </form>
 
+{% if error_message %}
+    <p class="error">{{error_message}}</p>
+{% endif %}
+
 {% endblock %}

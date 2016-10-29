@@ -40,8 +40,7 @@ User management functionality is provided by several auxiliary scripts.
 
 ### List users
 
-```list_users.py```
-
+```list_users.py ```
 
 ## Configuration
 

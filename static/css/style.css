@@ -20,6 +20,7 @@ div.file_explorer div.explorer_item {
 div.file_explorer div.explorer_item a.explorer_item {
     text-decoration: none;
     color: #000;
+    line-height: 26px;
 }
 div.file_explorer div.explorer_item:hover {
     background-color: #eef;
@@ -27,11 +28,11 @@ div.file_explorer div.explorer_item:hover {
 div.file_explorer div.explorer_item.directory {
     font-weight: bold;
     background-image: url(/static/images/directory.png);
-    background-position: 3px 3px;
+    background-position: 3px 6px;
 }
 div.file_explorer div.explorer_item.file {
     background-image: url(/static/images/file.png);
-    background-position: 5px 2px;
+    background-position: 5px 7px;
 }
 div.file_explorer div.explorer_item div.name {
     margin-right: 200px;
@@ -73,6 +74,9 @@ div.top_toolbar .top_toolbar_block:first-child {
 }
 div.top_toolbar .top_toolbar_block.right {
     float: right;
+}
+div.top_toolbar .top_toolbar_block a {
+    line-height: 26px;
 }
 
 button, input[type="submit"] {

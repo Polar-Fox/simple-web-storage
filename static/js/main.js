@@ -93,4 +93,28 @@ $(document).ready(function() {
         });
         return false;
     });
+
+    $('#btn_upload').click(function() {
+
+
+        vex.dialog.open({
+            // message: 'Select a file',
+            // buttons: [
+            //     $.extend({}, vex.dialog.buttons.OK, { text: 'Upload' }),
+            //     $.extend({}, vex.dialog.buttons.CANCEL, { text: 'Cancel' })
+            // ],
+            input:
+                '<span>Upload a file: </span> '+
+                '<form id="upload_form" action="" method="POST" enctype="multipart/form-data"> '+
+                '    <input type="file" name="file"> '+
+                '</form>',
+            callback: function (data) {
+                if (data) {
+                    $('#upload_form').submit();
+                }
+            }
+        });
+
+        return false;
+    });
 });

@@ -38,6 +38,10 @@ User management functionality is provided by several auxiliary scripts.
 
 ```remove_user.py <username>```
 
+### Changing user password
+
+```change_password.py <username> <new_password>```
+
 ### List users
 
 ```list_users.py ```

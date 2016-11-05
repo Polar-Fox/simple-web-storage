@@ -1,2 +1,2 @@
-templates/** linguist-vendored=false
-static/css/** linguist-vendored=false
+templates/** linguist-vendored=true
+static/css/** linguist-vendored=true

@@ -52,3 +52,10 @@ All the configuration is in ```conf.py``` file:
 
 - *conf.media_dir* -- storage directory
 - *conf.users_file* -- JSON-file with info about users. It's created and managed by user management scripts.
+
+## Credits
+
+Icons used:
+
+* [Folder icon](https://openclipart.org/detail/76201/folder-blue) by [shokunin](https://openclipart.org/user-detail/shokunin)
+* [File icon](https://openclipart.org/detail/83893/file-icon) by [jhnri4](https://openclipart.org/user-detail/jhnri4)

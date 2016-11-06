@@ -95,23 +95,32 @@ $(document).ready(function() {
     });
 
     $('#btn_upload').click(function() {
-
-
         vex.dialog.open({
-            // message: 'Select a file',
-            // buttons: [
-            //     $.extend({}, vex.dialog.buttons.OK, { text: 'Upload' }),
-            //     $.extend({}, vex.dialog.buttons.CANCEL, { text: 'Cancel' })
-            // ],
+            message: 'Upload a file:',
+            buttons: [
+                $.extend({}, vex.dialog.buttons.YES, { text: 'Upload' }),
+                $.extend({}, vex.dialog.buttons.NO, { text: 'Cancel' })
+            ],
+            shouldClose: false,
             input:
-                '<span>Upload a file: </span> '+
                 '<form id="upload_form" action="" method="POST" enctype="multipart/form-data"> '+
                 '    <input type="file" name="file"> '+
                 '</form>',
-            callback: function (data) {
+            callback: function(data) {
+                console.log(data);
                 if (data) {
                     $('#upload_form').submit();
                 }
+            },
+            onSubmit: function(e) {
+                var filename = $('#upload_form input[name="file"]').eq(0).val();
+                if (!filename) {
+                    vex.dialog.alert('Choose a file');
+                }
+                else {
+                    $('#upload_form').submit();
+                }
+                e.preventDefault();
             }
         });
 

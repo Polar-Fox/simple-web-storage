@@ -107,7 +107,6 @@ $(document).ready(function() {
                 '    <input type="file" name="file"> '+
                 '</form>',
             callback: function(data) {
-                console.log(data);
                 if (data) {
                     $('#upload_form').submit();
                 }

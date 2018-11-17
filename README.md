@@ -7,6 +7,8 @@ SimpleWebStorage provides simple authorization and user management.
 
 User management works via the command line. Users manage their files via the web interface.
 
+![Screenshot](https://github.com/Polar-Fox/simple-web-storage/blob/master/screenshots/001.png?raw=true)
+
 ## Usage
 
 Each user has their own file storage directory. A user can manage files and folders in their storage directory
